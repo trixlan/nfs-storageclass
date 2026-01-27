@@ -9,7 +9,7 @@ oc create ns nfs
 oc create -f rbac.yaml
 # Para poder descargar la imagen la puse en un repositorio de git
 oc import-image nfs-subdir-external-provisioner:v4.0.2 --from=quay.io/gchavezt/nfs-subdir-external-provisioner:v4.0.2 --confirm -n nfs
-# Realizamos el deployment de la imagen
+# Realizamos el deployment de la imagen (primero verificar los datos del NFS)
 oc create -f Storage/deployment.yaml
 oc create -f Storage/storageClass.yaml
 oc create role use-scc-hostmount-anyuid --verb=use --resource=scc --resource-name=hostmount-anyuid -n nfs
