@@ -1,0 +1,38 @@
+# Apply this file
+# Get a bash prompt in the container with: kubectl exec -it pod/ubuntu-test-nfs -- /bin/bash
+# Navigate to /nfs directory
+# Create some files and confirm everything is as expected on the NFS Server
+#
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-nfs-provisioner
+  namespace: nfs
+spec:
+  storageClassName: nfs-client
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Mi
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: ubuntu
+  name: ubuntu-test-nfs
+  namespace: nfs
+spec:
+  containers:
+  - image: ubuntu
+    name: ubuntu
+    resources: {}
+    command: ["sleep", "3600"]
+    volumeMounts:
+      - mountPath: /nfs
+        name: nfs-vol
+  volumes:
+    - name: nfs-vol
+      persistentVolumeClaim:
+        claimName: test-nfs-provisioner
