@@ -27,7 +27,7 @@ spec:
               mountPath: /persistentvolumes   # path del contenedor
           env:
             - name: PROVISIONER_NAME
-              value: nfs-storage      # nombre del provisioner en el deployment
+              value: nfs-storage      # nombre del provisioner en el deployment, asi es como lo llamara el storageclass
             - name: NFS_SERVER
               value: 54.91.64.26      # Revisar la IP del nfs
             - name: NFS_PATH
